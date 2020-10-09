@@ -12,9 +12,13 @@ router.get('/',
 //next = next function to run in a chain
 router.get('/cs412',
     (req, res, next) => {
-  res.send('hey now');
+  res.send('hey now (in a GET)');
     }
     )
+router.post('/cs412', (req, res, next) => {
+    res.send('hey now (in a POST)');
+
+})
 
 router.get('/fx',
     (req, res, next) => {
@@ -24,7 +28,7 @@ router.get('/fx',
       };
       request(options, function (error, response) {
         if (error) throw new Error(error);
-        console.log(JSON.parse(response.body));
+        console.log('IN INDEX.JS: ',JSON.parse(response.body));
 //        res.json(response.body);
           res.render('index',
               {title: JSON.parse(response.body)})

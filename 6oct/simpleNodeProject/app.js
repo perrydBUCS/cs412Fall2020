@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const fxRouter = require('./routes/fx')
 
 const app = express();
 
@@ -17,12 +18,24 @@ app.set('view engine', 'pug');
 //this stuff is executed on EVERY request IN ORDER
 app.use(logger('dev'));
 app.use(express.json());
+
+//build a custom logger as middleware
+//
+app.use((req, res, next) => {
+  console.log(`
+  ${req.url} : METHOD IS -> ${req.method} on our shiny new app!
+  `);
+  next();
+})
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//these end up being relative routes
+//let's say I have '/bob in each route file
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/fx', fxRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -41,3 +54,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+//
+// let foo = 'somethingThatTakesTime';
+// console.log(${foo}); //this prints undefined
