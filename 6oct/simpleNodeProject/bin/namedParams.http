@@ -1,0 +1,4 @@
+GET http://localhost:3000/passingArgs/name/reveal
+Accept: application/json
+
+###
