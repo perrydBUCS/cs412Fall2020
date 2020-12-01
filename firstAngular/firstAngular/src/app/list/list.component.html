@@ -1,0 +1,20 @@
+
+<div>
+<ul *ngFor="let person of people">
+  <li (click)="setSelectedPerson(person)">{{person.firstName}}</li>
+</ul>
+</div>
+
+
+<div>
+  <input type="text" [(ngModel)]="selectedPerson.firstName">
+</div>
+<!--
+<br/>
+<input type="text" [(ngModel)]="fubar"> {{fubar}}
+-->
+
+<!--0
+[ ] = inbound from model
+( ) = event / outbound to the model
+-->
