@@ -1,0 +1,54 @@
+<h2>HttpClient running in a service</h2>
+
+<button (click)="getWeather()">Get the weather</button>
+<br/>
+Current weather: <br/>
+Temp: {{currentWeather.temperature}}
+Pressure: {{currentWeather.pressure}}
+Humidity : {{currentWeather.humidity}}
+
+Way 0: straight up html form tags, right to external URL
+<form action="http://localhost:3000/routeHere" method="post">
+  <label>City </label><input name="city"><br/>  on req.body.city and so on
+  <label>Units </label><input name="units"><br/>
+  <button type="submit">Submit</button>
+</form>
+
+
+ Way 1: use ngModel to bind variables, then call a function from Submit button
+<form (ngSubmit)="getWeatherByCity()">
+  City: <input name="city" [(ngModel)]="city">
+  Units: <input name="units" [(ngModel)]="units">
+  <button type="submit">Submit</button>
+
+</form>
+
+
+ Way 2: Simple FormControls
+<br/>
+<!-- [formControl] is really similar to [ngModel], adds validation etc -->
+  City: <input  [formControl]="cityControl2"> : {{city}}<br/>
+  Units: <input  [formControl]="unitsControl2" ><br/>
+  <button (click)="getWeatherByCityWay2()">Submit</button>
+<br/>
+
+
+Way 3: FormGroup as a way to contain FormControls
+ Note that we're using formControlName here to get to controllers inside the form
+ Note that this also works with FormBuilder service (same syntax in HTML)
+
+
+<br/>
+<form [formGroup]="weatherFormGroup" (ngSubmit)="getWeatherByCityWay3()">
+City: <input  formControlName="cityControl"> : {{city}}<br/>
+Units: <input  formControlName="unitsControl" ><br/>
+<button type="submit">Submit</button>
+</form>
+<br/>
+
+
+
+<!-- use a pipe to format
+{{weatherFormGroup | json}}
+-->
+{{weatherFormGroup | currency}}
